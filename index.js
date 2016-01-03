@@ -4,6 +4,10 @@ $(function() {
 	$(function(){
 
 	    $("a").on("click", function(e){
+	    	
+	    	if(e.metaKey || e.ctrlKey)
+	    		return;
+	    	
 	    	e.preventDefault();
 	        clicks++;  //count clicks
 
