@@ -29,8 +29,9 @@ $(function() {
 	    });
 
 	});
-
+	console.log("Extension loaded");
 });
+
 function doubleClick(e){
   	var aTag = createTag(e.target.href);
   	aTag.target = '_blank'; // to open in a new tab

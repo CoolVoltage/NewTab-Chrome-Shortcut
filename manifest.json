@@ -1,0 +1,13 @@
+{
+	"name" : "New tab shortcut",
+	"manifest_version": 2,
+	"version" : "0.1",
+	"description" : "Opens a link in new tab if double clicked on it.",
+	"permissions" : [
+		"activeTab"
+	],
+	"content_scripts" : [{
+		"matches" : ["*://*/*"],
+		"js" : ["jquery.min.js","index.js"]
+	}]
+}
