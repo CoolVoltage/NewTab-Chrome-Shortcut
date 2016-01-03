@@ -1,12 +1,17 @@
 $(function() {
-	var DELAY = 700, clicks = 0, timer = null;
+
+	var DELAY = 400, clicks = 0, timer = null;
 
 	$(function(){
 
 	    $("a").on("click", function(e){
 	    	
-	    	if(e.metaKey || e.ctrlKey)
+	    	if(e.metaKey || e.ctrlKey) // Supress extension when ctrl + click or cmd + click
 	    		return;
+
+	    	if(e.target.tagName != 'A'){ // If the target is not <a>, start poking around the hierarchy to find the <a>
+	    		e.target = $(e.target).closest('a')[0];
+	    	} 
 	    	
 	    	e.preventDefault();
 	        clicks++;  //count clicks
@@ -34,20 +39,29 @@ $(function() {
 
 	});
 	console.log("Extension loaded");
+
 });
 
 function doubleClick(e){
+
   	var aTag = createTag(e.target.href);
   	aTag.target = '_blank'; // to open in a new tab
   	aTag.click();
+
 }
+
 function singleClick(e){
+
 	var aTag = createTag(e.target.href);
 	aTag.click();
+
 }
+
 // a new <a> so that jquery's click event handler doesn't interfere.
 function createTag(link){
+
 	var aTag = document.createElement('a');
 	aTag.href = link;
 	return aTag;
+
 }
