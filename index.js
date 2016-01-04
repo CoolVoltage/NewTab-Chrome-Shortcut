@@ -13,6 +13,11 @@ $(function() {
 	    		e.target = $(e.target).closest('a')[0];
 	    	} 
 	    	
+	    	if($(e.target).hasClass('newtab-extension-defaultBehavior')){ //if tag holds this class, allow to bypass handler
+	    		$(e.target).removeClass('newtab-extension-defaultBehavior');
+	    		return;
+	    	}
+
 	    	e.preventDefault();
 	        clicks++;  //count clicks
 
@@ -38,7 +43,7 @@ $(function() {
 	    });
 
 	});
-	console.log("Extension loaded");
+	console.log("NewTab Chrome Extension loaded");
 
 });
 
@@ -52,8 +57,9 @@ function doubleClick(e){
 
 function singleClick(e){
 
-	var aTag = createTag(e.target.href);
-	aTag.click();
+	// add special class to bypass event handler
+	$(e.target).addClass('newtab-extension-defaultBehavior');
+	e.target.click();
 
 }
 
