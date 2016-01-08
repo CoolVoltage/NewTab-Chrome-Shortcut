@@ -5,7 +5,7 @@ $(function() {
 	$(function(){
 
 	    $("a").on("click", function(e){
-	    	
+
 	    	if(e.metaKey || e.ctrlKey) // Supress extension when ctrl + click or cmd + click
 	    		return;
 
@@ -24,6 +24,15 @@ $(function() {
 	        if(clicks === 1) {
 
 	            timer = setTimeout(function() {
+
+	            	/*
+					The below check is in cases where the developer prevents default behavior of <a> (navigation) and 
+					adds his custom event. For eg: Clicking on your profile in top right corner of Gmail.
+					In such a case, the custom event is already fired upon the first click and a subsuqent click from the 
+					singleClick function is unecessary and often creates a buggy UX.
+	            	*/
+	            	if(e.cancelable) 
+	            		return;
 
 	                singleClick(e);   
 	                clicks = 0;             //after action performed, reset counter
