@@ -1,10 +1,19 @@
 $(function() {
 
-	var DELAY = 400, clicks = 0, timer = null;
+	var DELAY = 400, clicks = 0, timer = null,cancelSingleClick = false;
 
 	$(function(){
 
 	    $("a").on("click", function(e){
+
+	    	/*
+			The below check is in cases where the developer prevents default behavior of <a> (navigation) and 
+			adds his custom event. For eg: Clicking on your profile in top right corner of Gmail.
+			In such a case, the custom event is already fired upon the first click and a subsuqent click from the 
+			singleClick function is unecessary and often creates a buggy UX.
+	        */
+	    	if(e.defaultPrevented)
+	    		cancelSingleClick = true;
 
 	    	if(e.metaKey || e.ctrlKey) // Supress extension when ctrl + click or cmd + click
 	    		return;
@@ -25,17 +34,14 @@ $(function() {
 
 	            timer = setTimeout(function() {
 
-	            	/*
-					The below check is in cases where the developer prevents default behavior of <a> (navigation) and 
-					adds his custom event. For eg: Clicking on your profile in top right corner of Gmail.
-					In such a case, the custom event is already fired upon the first click and a subsuqent click from the 
-					singleClick function is unecessary and often creates a buggy UX.
-	            	*/
-	            	if(e.cancelable) 
-	            		return;
+	            	clicks = 0;
 
-	                singleClick(e);   
-	                clicks = 0;             //after action performed, reset counter
+	            	if(cancelSingleClick) {
+	            		cancelSingleClick = false;
+	            		return;
+	            	}
+
+	                singleClick(e);         
 
 	            }, DELAY);
 
